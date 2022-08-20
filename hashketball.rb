@@ -127,3 +127,76 @@ def game_hash
 end
 
 # Write code here
+# #num_points_scored
+# knows the number of points scored by each player
+def all_players
+  game_hash[:home][:players] + game_hash[:away][:players]
+end
+
+def num_points_scored(player_name)
+  player = player_stats(player_name)
+  player[:points]
+end
+
+# #shoe_size
+# knows the shoe size of each player
+def shoe_size(player_name)
+  player = player_stats(player_name)
+  player[:shoe]
+end
+
+# #team_colors
+# knows the Brooklyn Nets colors are Black and White
+# knows the Charlotte Hornets colors are Turquoise and Purple
+def find_team(team_name)
+  # #find on with a hash returns an array with the first key and value that match the condition
+  team_info = game_hash.find do |location, team_data|
+    team_data[:team_name] == team_name
+  end
+
+  # return just the value (team_data) from the .find method
+  team_info[1]
+end
+
+def team_colors(team_name)
+  team = find_team(team_name)
+  team[:colors]
+end
+
+# #team_names
+# returns the team names
+
+def team_names
+  game_hash.map do |location, team_data|
+    team_data[:team_name]
+  end
+end
+
+# #player_numbers
+# returns the player jersey numbers
+def player_numbers(team_name)
+  team = find_team(team_name)
+  team[:players].map do |player|
+    player[:number]
+  end
+end
+
+# #player_stats
+# returns all stats for a given player
+def player_stats(player_name)
+  all_players.find do |player| 
+    player[:player_name] == player_name 
+  end
+end
+
+# #big_shoe_rebounds
+# returns the number of rebounds of the player with the biggest shoe size
+def big_shoe_player
+  all_players.max_by do |player|
+    player[:shoe]
+  end
+end
+
+def big_shoe_rebounds
+  big_shoe_player[:rebounds]
+end
